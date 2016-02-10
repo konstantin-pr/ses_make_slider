@@ -1,4 +1,3 @@
- 
 $.fn.serializeObject = function()
 {
     var o = {};
@@ -172,6 +171,9 @@ $.fn.serializeObject = function()
 		}, 10));
 	}
 
+
+
+	 
 	/**
 	 * open a grid item
 	 */
@@ -184,56 +186,26 @@ $.fn.serializeObject = function()
 		var gridImg = item.querySelector('img'),
 			gridImgOffset = gridImg.getBoundingClientRect();
 
-		var images = item.querySelector('ul');
-		console.log('grid imges', images);	
 		// index of current item
 		this.current = this.items.indexOf(item);
-        //get image names for slider
-        var imageNames = item.getAttribute('data-images');
-        var imageList = document.createElement('ul');
-        if (imageNames !== null){ 
-           var imagesSrc = (imageNames.split(',')).map(function(item){
-                return 'img/sale/original/' + item + '.jpg';
-            });
-             
-            imageList.className = 'original flat-photos'; 
-            imagesSrc.forEach(function(srcpath){
-                var li = document.createElement('li');
-                var img = document.createElement('img');
-                img.src = srcpath;
-                li.appendChild(img);
-                imageList.appendChild(li);
-            });
-            console.log('ul now', imageList);
-            
-        }
-		// set the src of the original image element (large image)
-		this._setOriginal(item.querySelector('a').getAttribute('href'), imageList);
-		 $('.flat-photos').unslider({'autoplay':true, 'arrows':false, 'nav': true, 'animation': 'vertical'});
 
-	   
+		// set the src of the original image element (large image)
+		this._setOriginal(item.querySelector('a').getAttribute('href'));
+		
 		// callback
 		this.options.onOpenItem(this, item);
-		//create ul li img
-       
-    
-            
-       
-		// set the clone image 
-		//todo set the clone images for each image
-		//clone ul , clone li
-		//fore each ul li clone img
-		//newelement = element.cloneNode(bool)
+
+		// set the clone image
 		this._setClone(gridImg.src, {
 			width : gridImg.offsetWidth,
 			height : gridImg.offsetHeight,
 			left : gridImgOffset.left,
 			top : gridImgOffset.top
-		}, imageList);
+		});
 
 		// hide original grid item
 		classie.add(item, 'grid__item--current');
-        
+
 		// calculate the transform value for the clone to animate to the full image view
 		var win = this._getWinSize(),
 			originalSizeArr = item.getAttribute('data-size').split('x'),
@@ -252,11 +224,13 @@ $.fn.serializeObject = function()
 			this.previewDescriptionEl.innerHTML = descriptionEl.innerHTML;
 		}
 
+		var imageList = this._getImageList(item);
+		console.log('imageList',imageList);
+
 		var self = this;
 		setTimeout(function() { 
 			// controls the elements inside the expanded view
 			classie.add(self.previewEl, 'preview--open');
-            
 			// callback
 			self.options.onExpand();
 		}, 0);
@@ -265,12 +239,12 @@ $.fn.serializeObject = function()
 		onEndTransition(this.cloneImg, function() {
 			// when the original/large image is loaded..
 			imagesLoaded(self.originalImg, function() {
-                  
 				// close button just gets shown after the large image gets loaded
 				classie.add(self.previewEl, 'preview--image-loaded');
 				// animate the opacity to 1
 				self.originalImg.style.opacity = 1;
-                $('.flat-photos').unslider({'autoplay':true, 'arrows':true, 'nav': true, 'animation': 'vertical'}); 
+				
+				
 				// and once that's done..
 				onEndTransition(self.originalImg, function() {
 					// reset cloneImg
@@ -279,6 +253,11 @@ $.fn.serializeObject = function()
 					self.cloneImg.style.transform = 'translate3d(0,0,0) scale3d(1,1,1)';
 
 					self.isAnimating = false;
+
+					self._initSlider();
+					self.originalImg.style.opacity = 0;
+				
+
 				});
 				
 			});	
@@ -288,34 +267,10 @@ $.fn.serializeObject = function()
 	/**
 	 * create/set the original/large image element
 	 */
-	 //rewrite setoriginal for each ul li
-	GridFx.prototype._setOriginal = function(src, imageList) { 
-         
-	 
+	GridFx.prototype._setOriginal = function(src) {
+		if( !src ) {
 			this.originalImg = document.createElement('img');
-         console.log('original imagelist 0', imageList);
-        console.log('original imagelist 01', imageList!==undefined);
-        
-            if (imageList !== undefined){ 
-                    imageList.className = 'original flat-photos'
-                  
-                   
-                this.originalImg.style.maxWidth = 'calc(' + parseInt(Math.abs(this.options.imgPosition.x)*100) + 'vw - ' + this.options.pagemargin + 'px)';
-			this.originalImg.style.maxHeight = 'calc(' + parseInt(Math.abs(this.options.imgPosition.y)*100) + 'vh - ' + this.options.pagemargin + 'px)';
-			// need it because of firefox
-			this.originalImg.style.WebkitTransform = 'translate3d(0,0,0) scale3d(1,1,1)';
-			this.originalImg.style.transform = 'translate3d(0,0,0) scale3d(1,1,1)';
-			src = ''; 
-             $(this.originalImg).unslider({'autoplay':true, 'arrows':false, 'nav': true, 'animation': 'vertical'});
-			 
-            this.originalImg = imageList;
-             console.log('final ', this.originalImg);
-            }
-			//create here ul li
-            else {
-                this.originalImg.className = 'original'; 
-			
-            //this.originalImg.classList.add("flat-photos");
+			this.originalImg.className = 'original';
 			this.originalImg.style.opacity = 0;
 			this.originalImg.style.maxWidth = 'calc(' + parseInt(Math.abs(this.options.imgPosition.x)*100) + 'vw - ' + this.options.pagemargin + 'px)';
 			this.originalImg.style.maxHeight = 'calc(' + parseInt(Math.abs(this.options.imgPosition.y)*100) + 'vh - ' + this.options.pagemargin + 'px)';
@@ -323,27 +278,22 @@ $.fn.serializeObject = function()
 			this.originalImg.style.WebkitTransform = 'translate3d(0,0,0) scale3d(1,1,1)';
 			this.originalImg.style.transform = 'translate3d(0,0,0) scale3d(1,1,1)';
 			src = '';
-            this.originalImg.setAttribute('src', src);
-            }
 			this.previewEl.appendChild(this.originalImg);
-            console.log('preview', this.previewEl);
-		 
+		}
+
+		this.originalImg.setAttribute('src', src);
 	};
 
 	/**
 	 * create/set the clone image element
 	 */
-	GridFx.prototype._setClone = function(src, settings, imageList) {
-
-		if( !src || imageList != undefined) {
+	GridFx.prototype._setClone = function(src, settings) {
+		if( !src ) {
 			this.cloneImg = document.createElement('img');
 			this.cloneImg.className = 'clone';
 			src = '';
 			this.cloneImg.style.opacity = 0;
-            
-                this.previewEl.appendChild(this.cloneImg);
-             
-			
+			this.previewEl.appendChild(this.cloneImg);
 		}
 		else {
 			this.cloneImg.style.opacity = 1;
@@ -357,6 +307,47 @@ $.fn.serializeObject = function()
 		this.cloneImg.setAttribute('src', src);
 	};
 
+	//create ul list node for using at slider
+	GridFx.prototype._getImageList = function(item) {
+		var imageNames = item.getAttribute('data-images');
+        var imageList = document.createElement('ul');
+        if (imageNames !== null) { 
+           var imagesSrc = (imageNames.split(',')).map(function(item){
+                return 'img/sale/original/' + item + '.jpg';
+            });
+             
+            imageList.className = 'flat-photos'; 
+            imagesSrc.forEach(function(srcpath){
+                var li = document.createElement('li');
+                var img = document.createElement('img');
+                img.src = srcpath;
+                li.appendChild(img);
+                imageList.appendChild(li);
+            });
+            console.log('ul now', imageList);
+        }
+
+
+        	imageList.style.opacity = 0;
+        	imageList.style.maxWidth = 'calc(' + parseInt(Math.abs(this.options.imgPosition.x)*100) + 'vw - ' + this.options.pagemargin + 'px)';
+			imageList.style.maxHeight = 'calc(' + parseInt(Math.abs(this.options.imgPosition.y)*100) + 'vh - ' + this.options.pagemargin + 'px)';
+			// need it because of firefox
+			imageList.style.WebkitTransform = 'translate3d(0,0,0) scale3d(1,1,1)';
+			imageList.style.transform = 'translate3d(0,0,0) scale3d(1,1,1)';
+			 
+			 //create imageListProperty
+			this.imageList = imageList;
+			this.previewEl.appendChild(this.imageList);
+			
+        return imageList;  
+	};
+
+	//init slider based on image list
+	GridFx.prototype._initSlider = function() {
+		$(this.imageList).unslider({'autoplay':true, 'arrows':true, 'nav': true, 'animation': 'vertical'});
+		(this.previewEl.querySelector('.unslider')).classList.add("original");
+		this.imageList.style.opacity = 1;
+	}
 	/**
 	 * closes the original/large image view
 	 */
@@ -465,7 +456,7 @@ $.fn.serializeObject = function()
 				        $.post( "s/srequest.php",  $('.user-question').serializeObject(),
 				        function( data ) {
 				        	data = jQuery.parseJSON(data);
-				        	//console.log(data.status);
+				        	console.log(data.status);
 				        	if (data.status == 'success'){
 				        		$('.title').hide();
 				        		$('.title-success').show();
@@ -481,7 +472,7 @@ $.fn.serializeObject = function()
 							  		  console.log( key + ": " + value );
 							  	}); 
 						   }
-						//console.log(data);
+						console.log(data);
 						});
 				        return false; 
 				};
