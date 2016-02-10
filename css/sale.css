@@ -1,0 +1,13 @@
+.sale .codrops-header { 
+	background: #accd3a;
+    background: linear-gradient(20deg, #accd3a, #2bc792);
+}
+
+.baths-large {
+    background-position: -27px -454px;
+}
+
+.rooms-on, .rooms-off, .baths-on, .baths-off, .beds-on, .beds-off, .floorsize-on, .floorsize-off, .energy-sprite, .energy-sprite-off, .rooms-large, .beds-large, .baths-large, .numfloors-large, .lotsize-large, .totalsqm-large, .parking-large, .year-built-large, .builtarea-large {
+    background: url('/common/images/sprites-common.png') no-repeat;
+    display: inline-block;
+}

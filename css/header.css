@@ -1,0 +1,247 @@
+body {
+	background: #fff;
+}
+
+.codrops-header {
+	margin: 0 auto;
+	padding: 2em;
+	text-align: center;
+	background: #14CC66;
+    
+}
+
+.apartments .codrops-header {
+	padding-bottom: 2em;
+	background: #5dd19c;
+    background: linear-gradient(20deg, #104a72, #5dd19c 75%, #fffae8);  
+}
+
+.codrops-header h1 {
+	margin: 0;
+	font-size: 2.5em;
+	font-weight: 900;
+	color: #fff;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.apartments .codrops-header h1, .sale .codrops-header h1 {
+	font-size: 2.8em;
+	color: #ffad2b;
+    font-family: 'Lato', sans-serif;
+}
+
+.tours .codrops-header h1 {
+	font-size: 2.35em;
+	letter-spacing: 1px;
+}
+
+.codrops-header h1 span {
+	display: block;
+	padding: 0.2em 0 0.6em 0.1em;
+	font-size: 0.6em;
+	font-weight: 300;
+	color: #fff;
+}
+
+.codrops-header a {
+	color: #fff;	
+}
+
+.codrops-header a:hover {
+	text-decoration: underline;
+	color: yellow;
+}
+
+.about_us .codrops-header {
+	background: #9C00FF;
+}
+
+.appartments .codrops-header {
+	 
+}
+
+.tours .codrops-header {
+	background:#F7B82D;
+}
+.tours .codrops-header {
+    background: #F7B82D;
+    background: linear-gradient(-20deg, #d23c39, #F7B82D);
+ 
+}
+
+.codrops-header .fa {
+	color: #ffad2b;
+}
+
+.codrops-header .fa-mobile{ 
+    position: relative;
+    top: -0.5rem; 
+}
+/* Demo links */
+.main-nav {
+	padding-top: 50px;
+}
+
+.main-nav a {
+	font-family: "Lato Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin: 15px;
+	/*font-size: 1rem;*/
+	padding: 5px 2px;
+	font-weight: 900;
+	text-decoration: none;
+}
+
+.main-nav a.current-page {
+	color: yellow;
+	text-decoration: underline;
+}
+ 
+section {
+	padding: 1em;
+	text-align: center;
+}
+
+.related {
+	padding: 15em 0 3em;
+	clear: both;
+}
+
+.related p {
+	font-size: 1.5em;
+}
+
+.related > a {
+	border: 1px solid #2E3444;
+	display: inline-block;
+	text-align: center;
+	margin: 20px 10px;
+	padding: 25px;
+	color: #2E3444;
+}
+
+.related a:hover {
+	border-color: #FF2A48;
+	color: #FF2A48;
+}
+
+.related a img {
+	max-width: 100%;
+	opacity: 0.8;
+}
+
+.related a:hover img,
+.related a:active img {
+	opacity: 1;
+}
+
+.related a h3 {
+	margin: 0;
+	padding: 0.5em 0 0.3em;
+	max-width: 300px;
+	text-align: left;
+}
+
+@media screen and (max-width: 25em) {
+
+	.codrops-icon span {
+		display: none;
+	}
+
+}
+
+ 
+
+/*footer styles*/
+
+.footer {
+	/*background: #444444;*/
+	color: #fff;
+	font-size: 2rem;
+	display: block;
+	padding: 3rem;
+	font-family: 'Lato', sans-serif;   
+	background-color: #444444;
+	background-image: url(../img/buried.png);
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+.tours .footer {
+	padding: 1.5rem;
+}
+.tours .footer, .tours .footer nav a {
+	font-size: 1.1rem;
+}
+
+
+
+.footer nav {
+	margin-top: 5.5rem;
+}
+
+.footer nav  a {
+	color: #fff;
+	margin: 2rem;
+	padding: 1rem 0;
+	display: inline-block;
+}
+
+.footer nav a:hover, .footer nav a:active, .footer nav a.active {
+	color: rgb(255, 175, 0);;
+ 	border-bottom: 1px solid yellowgreen; 
+ 	text-decoration: none;
+}
+
+.footer-contacts .row {
+	margin: 1.5rem;
+}
+ 
+.footer-contacts h3 {
+	color: #FFAF00;
+	margin-left: 1.5rem;
+}
+
+.footer-contacts .row span {
+	font-weight: bold;
+}
+
+.footer-contacts .fa {
+	margin: 0 1rem;
+	color: yellowgreen;
+}
+
+.footer-contacts .viber .fa {
+	margin-left: 2rem;
+}
+
+@media (max-width: 960px) {
+	.footer {
+		font-size: 2.5rem;
+	}
+	.footer nav a {
+		font-size: 1.8rem;
+		padding: 0.5rem 0;
+		margin: 0 1.5rem;
+	}
+	.tours .footer, .tours .footer nav a {
+		font-size: 1.4rem;
+	}
+
+	.footer-contacts {
+		margin-top: 3.5rem;
+		font-size: 2rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.footer {
+		padding: 1.5rem 3rem;
+	}
+
+	.footer nav a {
+		font-size: 2rem;
+		padding: 1rem 0;
+		margin: 0 1.5rem;
+	}
+}
