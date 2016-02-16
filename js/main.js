@@ -224,7 +224,7 @@ $.fn.serializeObject = function()
 			this.previewDescriptionEl.innerHTML = descriptionEl.innerHTML;
 		}
 
-		var imageList = this._getImageList(item);
+		var imageList = null; //this._getImageList(item);
 		console.log('imageList',imageList);
 
 		var self = this;
@@ -254,8 +254,8 @@ $.fn.serializeObject = function()
 
 					self.isAnimating = false;
 
-					self._initSlider();
-					self.originalImg.style.opacity = 0;
+					//self._initSlider();
+					self.originalImg.style.opacity = 1;
 				
 
 				});
